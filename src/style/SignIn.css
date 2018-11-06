@@ -51,8 +51,12 @@ input{
 	border-radius: 2px;
 	background-color: #4ADeB1;
 	color: white;
+	border-bottom: solid 1px;
 }
-
+	::placeholder { 
+    color: white;
+    font-weight: bold 
+}
 body{
 	background-color: #f2fef7;
 }

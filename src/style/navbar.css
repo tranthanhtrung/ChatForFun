@@ -1,0 +1,44 @@
+.nav{
+	background-color: #4ADeB1;
+	height: 4em;
+	display: flex;
+	align-items: center; 
+	justify-content: space-around;
+	margin-bottom: 1em;
+}
+img{
+	border-radius: 18px;
+	height: 36px;
+	width: 36px;
+}
+body{
+	padding:0;
+}
+.nameOfPro{
+	float: left;
+	font-size: 3em;
+	font-weight: bold;
+}
+.infCur{
+	float: right;
+	display: flex;
+	align-items: center;
+}
+	.infCur img{
+		margin-right: 0.5em;
+		border: solid 1.5px #686c75;
+	}
+	.infCur span{
+		font-size: 16px;
+	}
+	.infCur button{
+		margin-left: 2em;
+		border: none;
+		height: 2.5em;
+		width: 5.5em;
+		border-radius: 2px;
+		cursor: pointer;
+		color: #4ADeB1;
+		background-color: white;
+		font-weight: bold;
+	}

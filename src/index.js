@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import SignIn from './component/SignIn.js';
 import * as serviceWorker from './serviceWorker';
-// import { createStore } from 'redux'
+import { createStore } from 'redux';
+import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom';
+import {Switch} from 'react-router';
+import { Provider } from 'react-redux';
+import { getFirestore } from 'redux-firestore';
 
-// const store = createStore();
 
-ReactDOM.render(<SignIn />, document.getElementById('root'));
+import SignIn from './component/SignIn.js';
+import Home from './component/Home.js';
+import rootReducer from './store/reducers/index.js';
+import App from './App.js'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+const store = createStore(rootReducer)
+
+ReactDOM.render(<App/>, document.getElementById('root'));
 serviceWorker.unregister();

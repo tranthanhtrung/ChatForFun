@@ -1,22 +1,11 @@
 import React , { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
-import firebase from 'firebase'
+import firebase from '../config/fbConfig.js'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 import './../style/SignIn.css'
-// import firebase from 'firebase'
-
-// const firebaseConfig = {}
-
-firebase.initializeApp({
-	apiKey: "AIzaSyBz8bKkQsao5OaRQxFv_tIKBl3U1lg4mOs",
-    authDomain: "appchat-fb0db.firebaseapp.com",
-    databaseURL: "https://appchat-fb0db.firebaseio.com",
-    projectId: "appchat-fb0db",
-    storageBucket: "appchat-fb0db.appspot.com",
-    messagingSenderId: "5185357440"
-})
+ 
 
 class SignIn extends React.Component{
 	state = {
@@ -36,22 +25,19 @@ class SignIn extends React.Component{
 	componentDidMount = () => {
 		firebase.auth().onAuthStateChanged( user => {
 			this.setState({isSignIn: !!user})
-			console.log(user);
 		})
 	}
-	SignOut = () => {
-		firebase.auth().signOut()
+
+	redirec = () => {
+		this.props.history.push("/");
 	}
+	
 	render(){
 		return(
 			<div className="Content">
 				{this.state.isSignIn ?
 					(
-						<div className="SignOut">
-							<div>Welcome <span className="Name">{firebase.auth().currentUser.displayName}</span></div>
-							<div><img className="avt" src={firebase.auth().currentUser.photoURL}></img></div>
-							<button className="bt" onClick={this.SignOut}>Sign out </button>
-						</div>
+						<div>{this.redirec()}</div>
 					)
 					:
 					(
