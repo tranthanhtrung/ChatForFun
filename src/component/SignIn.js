@@ -1,16 +1,21 @@
-import React , { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
 import firebase from '../config/fbConfig.js'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { creatDataFriend } from './../store/actions/index.js' 
 
 import './../style/SignIn.css'
  
 
 class SignIn extends React.Component{
+	constructor(props) {
+        super()
+    }
 	state = {
-		username: "",
-		password: "",
+		Data: {},
 		isSignIn: false,
 	}
 	uiConfig = {
@@ -29,10 +34,45 @@ class SignIn extends React.Component{
 	}
 
 	redirec = () => {
+		if(firebase.auth().currentUser !== null)
+			{
+				if(this.props.Data === undefined)
+				{		
+					var tmp ={
+							Name: firebase.auth().currentUser.displayName,
+							Uid: firebase.auth().O,
+							photo: firebase.auth().currentUser.photoURL,
+							isOn: true,
+						}
+					this.props.creatDataFriend(tmp)
+				}
+				else
+				{
+					for(var i = 0; i < this.props.Data.length; i++) 
+					{
+						if(i === this.props.Data.length - 1)
+						{
+						
+ 							if(this.props.Data[i].Data.Uid !== firebase.auth().O )
+							{
+								var tmp ={
+									Name: firebase.auth().currentUser.displayName,
+									Uid: firebase.auth().O,
+									photo: firebase.auth().currentUser.photoURL,
+									isOn: true,
+								}
+								this.props.creatDataFriend(tmp)
+							}
+						}
+					}
+				}
+			}
+	
 		this.props.history.push("/");
 	}
 	
 	render(){
+		console.log(this.props.Data);
 		return(
 			<div className="Content">
 				{this.state.isSignIn ?
@@ -57,5 +97,21 @@ class SignIn extends React.Component{
 		)
 	}
 }
+const mapStateToProps = (state) => {
+	return {
+		Data: state.firestore.ordered.Friends,
+	}
+}
+const mapDispatchToProps = (dispatch) => {
+	return {
+		creatDataFriend: (Data) => dispatch(creatDataFriend(Data))
+	}
+}
 
-export default SignIn
+export default compose(
+	connect(mapStateToProps, mapDispatchToProps),
+	firestoreConnect([
+		{ collection: 'Friends', }
+	])
+)(SignIn)
+

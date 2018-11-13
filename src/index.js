@@ -1,20 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
-import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom';
-import {Switch} from 'react-router';
-import { Provider } from 'react-redux';
-import { getFirestore } from 'redux-firestore';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import * as serviceWorker from './serviceWorker'
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+import { reduxFirestore, getFirestore } from 'redux-firestore'
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
+import fbConfig from './config/fbConfig.js'
 
-
-import SignIn from './component/SignIn.js';
-import Home from './component/Home.js';
-import rootReducer from './store/reducers/index.js';
+import rootReducer from './store/reducers/index.js'
 import App from './App.js'
 
-const store = createStore(rootReducer)
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+const store = createStore(rootReducer, 
+	compose(
+		applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+		reduxFirestore(fbConfig),
+		reactReduxFirebase(fbConfig)
+	)
+);
+
+ReactDOM.render(
+	<Provider store={store}>
+    	<App />
+    </Provider>
+, document.getElementById('root'));
 serviceWorker.unregister();

@@ -1,27 +1,21 @@
-import React from 'react';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
-import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom';
-import {Switch} from 'react-router';
-import { Provider } from 'react-redux';
-import { getFirestore } from 'redux-firestore';
+import React from 'react'
+import './index.css'
+import { createStore } from 'redux'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Switch} from 'react-router'
 
-import SignIn from './component/SignIn.js';
-import Home from './component/Home.js';
-import rootReducer from './store/reducers/index.js';
+import SignIn from './component/SignIn.js'
+import Home from './component/Home.js'
 
 
 class App extends React.Component{
 	render() {
 		return(
 		<Router>
-		  <div>
 		    <Switch>
 		      <Route exact path="/SignIn" component={SignIn} />
-		      <Route exact path="/" component={Home} />
+		      <Route exact path="/:id" component={Home} />
 		    </Switch>
-		  </div>
 		</Router>
 		)
 	} 

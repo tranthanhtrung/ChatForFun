@@ -1,16 +1,11 @@
-var initialState = {
-	state: [],
-}
+import projectReducer from './projectReducer.js'
+import { combineReducers } from 'redux'
+import { firestoreReducer } from 'redux-firestore'
 
-const rootReducer = (state = initialState, action) => {
-	switch (action.type) {
-    	case "Auth":
-    		return {
-    			state
-    		}
-    	default:
-    		return state
-	}
-}
+const rootReducer = combineReducers({
+	Data: projectReducer,
+	firestore: firestoreReducer,
+});
+
 
 export default rootReducer

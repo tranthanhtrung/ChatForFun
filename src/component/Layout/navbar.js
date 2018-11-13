@@ -1,5 +1,4 @@
-import React , { Component } from 'react';
-import ReactDOM from 'react-dom'
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import firebase from '../../config/fbConfig.js'
@@ -8,8 +7,8 @@ import '../../style/navbar.css'
 
 class Navbar extends React.Component{
 	constructor(props){
-    super(props);
-    this.state = {
+    	super(props);
+    	this.state = {
 			User: []       
     	}
   	}
