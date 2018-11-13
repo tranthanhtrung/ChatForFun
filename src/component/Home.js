@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom'
 
 import './../style/home.scss'
 import Navbar from './Layout/navbar.js'
+import { creatDataChat } from './../store/actions/index.js' 
+
 
 
 class Home extends React.Component{
@@ -20,30 +22,49 @@ class Home extends React.Component{
     	name: '',
     	photo: '',
     }
+
    	handleChange = (Name, photo) => {
    		this.setState({
    			name: Name,
    			photo: photo
    		})
    	}
-	render(){
+
+   	setMessage = () => {
+   		var au = {
+   			User1: firebase.auth().O,
+   			User2: this.props.match.params.id,
+   		}
+   		var tmp = {
+   			Content: {data: document.getElementById("myTextarea").value, send: firebase.auth().O }
+   		}
+   		document.getElementById("myTextarea").value = ""
+   		this.props.creatDataChat(au, tmp)
+   	}
+	render(){	
 		let friends = null
 		let data = null
 		if (this.props.Friends !== undefined)
 		{
 			friends = this.props.Friends.map( item => 
 				<li className="clearfix">
-		          <img src={item.Data.photo} alt="avatar" />
-		          <div className="about">
-		            <Link to={{
-                                pathname: '/' + item.Data.Uid,
-                             }} onClick={() => this.handleChange(item.Data.Name,item.Data.photo)}>
-		            	<div className="name">{item.Data.Name}</div>
-		            </Link>
-		            <div className="status">
-		              <i className="fas fa-circle online"></i> online
-		            </div>
-		          </div>
+					{item.Data.Uid != firebase.auth().O ? (
+						<span>
+						<img src={item.Data.photo} alt="avatar" />
+				        <div className="about">
+				            <Link to={{
+		                        pathname: '/' + item.Data.Uid,
+		                        }} onClick={() => this.handleChange(item.Data.Name,item.Data.photo)}>
+				            	<div className="name">{item.Data.Name}</div>
+				            </Link>
+				            <div className="status">
+				                <i className="fas fa-circle online"></i> online
+				            </div>
+				        </div>
+				        </span>
+					):(
+						<span></span>
+					)}
 		        </li>
 			);
 		}
@@ -119,12 +140,12 @@ class Home extends React.Component{
 				      </div>
 				      
 				      <div className="chat-message clearfix">
-				        <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+				        <textarea name="message-to-send" id="myTextarea" placeholder ="Type your message" rows="3"></textarea>
 				                
 				        <i className="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
 				        <i className="fa fa-file-image-o"></i>
 				        
-				        <button>Send</button>
+				        <button onClick={this.setMessage}>Send</button>
 
 				      </div>     
 				   </div> 
@@ -143,15 +164,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		//creatData: (Data) => dispatch(creatData(Data))
+		creatDataChat: (Au, Data) => dispatch(creatDataChat(Au, Data))
 	}
 }
 
 export default compose(
-	connect(mapStateToProps, null),
+	connect(mapStateToProps, mapDispatchToProps),
 	firestoreConnect([
-		{collection: 'Chat', },
-		{ collection: 'Friends', }
+		{ collection: 'Chat', },
+		{ collection: 'Friends', },
 	])
 )(Home)
 

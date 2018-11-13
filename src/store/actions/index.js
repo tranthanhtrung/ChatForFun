@@ -10,3 +10,17 @@ export const creatDataFriend = (Data) => {
 		})
 	}
 };
+
+export const creatDataChat = (Au, Data) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firestore = getFirestore();
+		var Content = Data.Content
+		firestore.collection("Chat").add({
+			Content,
+		}).then(() => {
+			dispatch({ type: 'CREAT_DATA_CHAT', Data });
+		}).catch((err) => {
+			dispatch({ type: 'CREAT_DATA_ERR', err})
+		})
+	}
+};

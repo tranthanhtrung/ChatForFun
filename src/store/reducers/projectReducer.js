@@ -1,4 +1,4 @@
-import { creatDataFriend } from '../actions/index.js'
+import { creatDataFriend, creatDataChat } from '../actions/index.js'
 
 var initialState = {
 	Data: {},
@@ -14,6 +14,10 @@ const projectReducer = (state = initialState, action) => {
     		return {
     			state
     		}
+        case "CREAT_DATA_CHAT":
+            return {
+                state: action.Data
+            }
     	default:
     		return state
 	}

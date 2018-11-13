@@ -5,8 +5,8 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
-import { creatDataFriend } from './../store/actions/index.js' 
 
+import { creatDataFriend } from './../store/actions/index.js' 
 import './../style/SignIn.css'
  
 
@@ -36,25 +36,15 @@ class SignIn extends React.Component{
 	redirec = () => {
 		if(firebase.auth().currentUser !== null)
 			{
-				if(this.props.Data === undefined)
-				{		
-					var tmp ={
-							Name: firebase.auth().currentUser.displayName,
-							Uid: firebase.auth().O,
-							photo: firebase.auth().currentUser.photoURL,
-							isOn: true,
-						}
-					this.props.creatDataFriend(tmp)
-				}
-				else
+				if(this.props.Data !== undefined)
 				{
 					for(var i = 0; i < this.props.Data.length; i++) 
 					{
 						if(i === this.props.Data.length - 1)
 						{
-						
  							if(this.props.Data[i].Data.Uid !== firebase.auth().O )
 							{
+								console.log("á");
 								var tmp ={
 									Name: firebase.auth().currentUser.displayName,
 									Uid: firebase.auth().O,
@@ -67,8 +57,8 @@ class SignIn extends React.Component{
 					}
 				}
 			}
-	
-		this.props.history.push("/");
+		var url = 'ApL3Zfx1EsMCaFJBN9oGz6HADR02'
+		this.props.history.push(url);
 	}
 	
 	render(){
